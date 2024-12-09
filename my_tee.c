@@ -6,13 +6,12 @@
 
 int main ( int argc, char *argv[] ){
 	int fd;
-	//char filename=strcat("../"+argv[0]+"/";
 	if (argc>1){
-		fd=open(argv[0], O_RDWR | O_CREAT, 0644);
+		fd = open(argv[1], O_RDWR | O_CREAT, 0644);
 		if (fd==-1){
 			perror("[-]");
-			exit;
+			exit(-1);
 		}
+		close(fd);
 	}
-	close(fd)
 }
