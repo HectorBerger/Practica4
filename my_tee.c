@@ -1,5 +1,4 @@
 #include <stdio.h>
-//#include <stdin.h>
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -11,21 +10,22 @@ int main ( int argc, char *argv[] ){
 		fd = open(argv[1], O_RDWR | O_CREAT, 0644);
 		if (fd==-1){
 			perror("[-]");
+			close(fd);
 			exit(-1);
 		}
-		close(fd);
-	}
-	else{
 		char buf[1];
-        	ssize_t lectura;
-        	ssize_t a;
-		ssize_t b;
-		int count;
+        	ssize_t lectura,a,b;
 		lectura = read(0, buf, 1);
-        	while (lectura!=-1){
-                	a = write(1, buf, count);
-                        b = write(fd, buf, count);
-                        lectura = read(0, buf, 1);
+        	while (lectura>0){
+			a = write(1, buf, 1);
+                       	b = write(fd, buf, 1);
+                	lectura = read(0, buf, 1);
 		}
+		close(fd);
+		if (lectura==-1){
+                        perror("[-]");
+                        exit(-1);
+        	}
 	}
 }
+
