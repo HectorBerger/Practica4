@@ -20,12 +20,16 @@ int main ( int argc, char *argv[] ){
 			a = write(1, buf, 1);
                        	b = write(fd, buf, 1);
                 	lectura = read(0, buf, 1);
+			if (a==-1 || b==-1){
+                        	perror("[-]");
+                        	exit(-1);
+			}
 		}
-		close(fd);
 		if (lectura==-1){
                         perror("[-]");
                         exit(-1);
         	}
+		close(fd);
 	}
 }
 
