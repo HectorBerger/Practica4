@@ -6,21 +6,35 @@
 
 int main ( int argc, char *argv[] ){
 	int fd;
-	//char filename=strcat("../"+argv[0]+"/";
-	if (argc>1){
-		fd=open(argv[1], O_RDWR | O_CREAT, 0644);
+	if (argc!=2){
+		printf("Ús: %s fitxer1 \n", argv[0]);
+       	exit(-1);
+	}
+	else{
+		fd = open(argv[1], O_RDWR | O_CREAT, 0644);
 		if (fd==-1){
 			perror("[-]");
-			exit;
+			close(fd);
+			exit(-1);
 		}
-		else {
-			char buf[1];
-			ssize_t lectura = read(int 0, void *buf, size_t 1);
-			while (lectura!=-1){
-				ssize_t write(int 1, void *buf, size_t count);
-				ssize_t a = write(int fd, void *buf, size_t count);
-				ssize_t lectura = read(int 0, void *buf, size_t 1);
-}
-close(fd);
-}
-}
+		char buf[1];
+        ssize_t lectura,a,b;
+		lectura = read(0, buf, 1);
+        while (lectura>0){
+			a = write(1, buf, 1);
+            b = write(fd, buf, 1);
+            lectura = read(0, buf, 1);
+			if (a==-1 || b==-1){
+				perror("[-]");
+                exit(-1);
+			}
+		}
+		if (lectura==-1){
+            perror("[-]");
+            exit(-1);
+        }
+		close(fd);
+	}
+	}
+
+
